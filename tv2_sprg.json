@@ -1,0 +1,153 @@
+[
+  {
+    "id": "1a",
+    "type": "rate",
+    "header": "Klima",
+    "question":
+      "Det vil være ok, hvis EU indfører lovgivning på klimaområdet, der er så ambitiøs, at det kommer til at koste arbejdspladser i nogle sektorer."
+  },
+  {
+    "id": "1b",
+    "type": "rate",
+    "header": "Klima",
+    "question":
+      "EU har en målsætning om at være klimaneutral i 2050. Det bør ske før 2050."
+  },
+  {
+    "id": "2a",
+    "type": "rate",
+    "header": "Forsvar",
+    "question":
+      "EU-landene bør styrke deres fælles militære samarbejde for at mindske afhængigheden af USA."
+  },
+  {
+    "id": "2b",
+    "type": "rate",
+    "header": "Forsvar",
+    "question":
+      "EU bør yde mere økonomisk støtte til europæisk våbenproduktion end i dag."
+  },
+  {
+    "id": "3a",
+    "type": "rate",
+    "header": "Krig i Ukraine",
+    "question":
+      "EU bør give massiv økonomisk støtte til Ukraine i krigen mod Rusland – uanset hvor længe krigen varer."
+  },
+  {
+    "id": "3b",
+    "type": "rate",
+    "header": "Krig i Ukraine",
+    "question":
+      "Hvis der stadig er et frit Ukraine efter krigen mod Rusland, bør Ukraine optages i EU senest ti år efter krigens afslutning."
+  },
+  {
+    "id": "4a",
+    "type": "rate",
+    "header": "Flygtninge",
+    "question":
+      "EU bør gøre mere for at forhindre, at flygtninge og migranter fra Mellemøsten og Afrika kommer ind i EU."
+  },
+  {
+    "id": "4b",
+    "type": "rate",
+    "header": "Flygtninge",
+    "question":
+      "Flygtninge og migranter, der ankommer til EU’s sydlige lande, bør fordeles mere ligeligt mellem alle lande i EU, end tilfældet er i dag."
+  },
+  {
+    "id": "5a",
+    "type": "rate",
+    "header": "Økonomi",
+    "question":
+      "Det er samlet set godt for dansk økonomi, at Danmark er med i EU."
+  },
+  {
+    "id": "5b",
+    "type": "rate",
+    "header": "Økonomi",
+    "question": "Danmark bør indføre euroen."
+  },
+  {
+    "id": "6a",
+    "type": "rate",
+    "header": "Landbrug",
+    "question":
+      "EU bør skærpe lovgivningen for, hvor meget landbruget må forurene og udlede af drivhusgasser."
+  },
+  {
+    "id": "6b",
+    "type": "rate",
+    "header": "Landbrug",
+    "question": "EU’s landbrugsstøtte bør reduceres markant."
+  },
+  {
+    "id": "7a",
+    "type": "rate",
+    "header": "IT/Kunstig intelligens",
+    "question":
+      "EU bør have den strammeste regulering af kunstig intelligens og digitale løsninger i verden for at forhindre misbrug af dette."
+  },
+  {
+    "id": "7b",
+    "type": "rate",
+    "header": "IT/Kunstig intelligens",
+    "question":
+      "EU bør yde økonomisk støtte til virksomheder, der udvikler kunstig intelligens, for at sikre at EU bliver førende på dette felt."
+  },
+  {
+    "id": "8a",
+    "type": "rate",
+    "header": "Børn & Sundhed",
+    "question":
+      "EU bør aktivt gennemføre politikker, der tilskynder EU-borgerne til at få flere børn end i dag."
+  },
+  {
+    "id": "8b",
+    "type": "rate",
+    "header": "Børn & Sundhed",
+    "question":
+      "EU gør i dag for lidt for at ensrette nationale lovgivninger mod miljøfarlige stoffer, der kan skade fertiliteten."
+  },
+  {
+    "id": "9a",
+    "type": "rate",
+    "header": "Demokrati",
+    "question": "Danmark bør afholde en folkeafstemning om udmeldelse af EU."
+  },
+  {
+    "id": "9b",
+    "type": "rate",
+    "header": "Demokrati",
+    "question":
+      "Beslutninger i EU bør i højere grad kunne vedtages ved et kvalificeret flertal frem for enstemmighed blandt medlemslandene."
+  },
+  {
+    "id": "10a",
+    "type": "rate",
+    "header": "Ulighed",
+    "question":
+      "EU bør ændre sine traktater, så der kan fastsættes en mindsteløn for EU-borgere, der arbejder i et andet land end deres eget."
+  },
+  {
+    "id": "10b",
+    "type": "rate",
+    "header": "Ulighed",
+    "question":
+      "Der overføres for mange penge fra de rigeste EU-lande til de fattigste EU-lande."
+  },
+  {
+    "id": "11a",
+    "type": "rate",
+    "header": "Ligestilling",
+    "question":
+      "EU’s direktiv om kønskvoter i børsnoterede virksomheder er et godt redskab til at fremme ligestilling mellem kønnene."
+  },
+  {
+    "id": "11b",
+    "type": "rate",
+    "header": "Ligestilling",
+    "question":
+      "EU bør indskrive retten til abort i EU’s charter om grundlæggende rettigheder."
+  }
+]

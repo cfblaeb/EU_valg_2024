@@ -1,0 +1,37 @@
+{
+  "farver": {
+    "A": "#a82721",
+    "B": "#733280",
+    "C": "#96b226",
+    "D": "#127b7f",
+    "F": "#e07ea8",
+    "G": "#beaa64",
+    "I": "#3fb2be",
+    "K": "#8b8474",
+    "M": "#b48cd2",
+    "O": "#eac73e",
+    "Q": "#5abe82",
+    "V": "#254264",
+    "Ø": "#e6801a",
+    "Æ": "#7896d2",
+    "Å": "#2b8738",
+    "": "#ff2ee4"
+  },
+  "bogstav_leg": {
+    "A": "Socialdemokratiet",
+    "B": "Radikale Venstre",
+    "C": "Det Konservative Folkeparti",
+    "D": "Nye Borgerlige",
+    "F": "Socialistisk Folkeparti",
+    "I": "Liberal Alliance",
+    "K": "Kristendemokraterne",
+    "M": "Moderaterne",
+    "O": "Dansk Folkeparti",
+    "Q": "Frie Grønne",
+    "V": "Venstre",
+    "Æ": "Danmarksdemokraterne",
+    "Ø": "Enhedslisten",
+    "Å": "Alternativet",
+    "": "Løsgænger"
+  }
+}
