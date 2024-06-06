@@ -6,22 +6,19 @@ from dash import Dash, dcc, html, callback_context
 from dash.dependencies import Input, Output
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 
-
 # load data
-df = pd.read_feather("2024_EU_Lasse_data.feather").reset_index()
-#df.parti.replace("Frie Grønne, Danmarks Nye Venstrefløjsparti", "Frie Grønne", inplace=True)
+df = pd.read_feather("2024_EP_Lasse_data.feather").reset_index()
+# df.parti.replace("Frie Grønne, Danmarks Nye Venstrefløjsparti", "Frie Grønne", inplace=True)
 color_dict = pd.read_json("various.json").set_index('bogstav_leg')['farver'].to_dict()
-#color_dict['Frie Grønne'] = color_dict['Frie Grønne, Danmarks Nye Venstrefløjsparti']
+# color_dict['Frie Grønne'] = color_dict['Frie Grønne, Danmarks Nye Venstrefløjsparti']
 tv2_sprg = pd.read_json('tv2_sprg.json')
-#dr_sprgs = pd.read_json('questions.json')
+dr_sprgs = pd.DataFrame()  # pd.read_json('questions.json')
+dr_sprgs['test'] = []
 
-dk_spg = [
-#	'530', '531', '533', '534', '535', '537', '538', '540', '541', '543', '544', '545', '546', '547', '548', '550',
-#	'551', '552', '553', '555', '556', '557', '559', '561', '563', '1a', '1b', '2a', '2b', '3a', '3b', '4a', '4b', '5a',
-#	'5b', '6a', '6b', '7a', '7b', '8a', '8b', '9a', '9b', '10a', '10b', '11a', '11b', '12a', '12b'
-	'1a', '1b', '2a', '2b', '3a', '3b', '4a', '4b', '5a', '5b', '6a', '6b', '7a', '7b', '8a', '8b', '9a', '9b', '10a',
-	'10b', '11a', '11b'
-]
+dk_spg = ['608', '609', '612', '613', '614', '615', '616', '617', '618', '620',
+		  '621', '622', '623', '626', '627', '629', '630', '631', '634', '636',
+		  '637', '639', '641', '644', '646', '1a', '1b', '2a', '2b', '3a', '3b', '4a', '4b', '5a', '5b', '6a', '6b',
+		  '7a', '7b', '8a', '8b', '9a', '9b', '10a', '10b', '11a', '11b']
 
 # do calcs
 X = df[dk_spg]
@@ -32,9 +29,8 @@ q = pd.concat([df, pd.DataFrame(lda.transform(df[dk_spg]), columns=["X", "y"]).s
 q['bogstav'] = q.parti.map(pd.read_json("various.json").reset_index().set_index('bogstav_leg')['index'])
 q['sized'] = 5
 
-#dr_sprgs.columns = dr_sprgs.columns.str.lower()
-#sprgs = pd.concat([tv2_sprg, dr_sprgs])[['id', 'question']].set_index('id')
-sprgs = tv2_sprg.set_index('id')
+dr_sprgs.columns = dr_sprgs.columns.str.lower()
+sprgs = pd.concat([tv2_sprg, dr_sprgs])[['id', 'question']].set_index('id')
 sprgs.index = sprgs.index.astype('str')
 sprgs = sprgs.loc[dk_spg]
 svar_muligheder = ['helt uenig', 'uenig', 'neutral', 'enig', 'helt enig']
@@ -72,12 +68,14 @@ app = Dash(
 server = app.server
 
 app.layout = dbc.Container([
+	dcc.Store(id='bruger_coord'),
 	dbc.Card(
 		dbc.Container(
 			[
 				html.H2("EU valg 2024"),
-				html.P("Analyse af hvor de enkelte kandidater står i forhold til hinanden og deres partier", className="lead",),
-			], #fluid=True,
+				html.P("Analyse af hvor de enkelte kandidater står i forhold til hinanden og deres partier",
+					   className="lead", ),
+			],  # fluid=True,
 		), body=True
 	),
 	dbc.Card(
@@ -100,19 +98,21 @@ app.layout = dbc.Container([
 		dbc.ListGroup([
 			dbc.ListGroupItem([
 				html.P(sprgs.loc[spg]['question']),
-				dcc.RadioItems(id=sprgs.loc[spg].name, options=[{'label': '', 'value': x / 4} for x in range(5)], value=0, labelStyle={'display': 'inline-block'})
+				dcc.RadioItems(id=sprgs.loc[spg].name, options=[{'label': '', 'value': x / 4} for x in range(5)],
+							   value=0, labelStyle={'display': 'inline-block'})
 			]) for spg in dk_spg
 		], flush=True)
 	], body=True)
-	, ], #fluid=True
+	, ],  # fluid=True
 )
 
 
 # %%
-@app.callback(Output('viz', 'figure'), [Input('parti_shadow', 'value'), Input('farveblind', 'value')])
-def update_graph(shadow, farveblind):
-	#global dine_coords, dine_aktiv
-
+@app.callback(Output('viz', 'figure'), [
+	Input('parti_shadow', 'value'),
+	Input('farveblind', 'value'),
+	Input('bruger_coord', 'data')])
+def update_graph(shadow, farveblind, data):
 	a = q  # efterladt sådan her pga vi ikke filtrere på samme måde som i 2022
 
 	if farveblind:
@@ -133,22 +133,21 @@ def update_graph(shadow, farveblind):
 	f1.update_layout(modebar_remove=['zoom', 'pan', 'select', 'lasso2d'])
 
 	if shadow:
-		for ii, (i, data) in enumerate(q.groupby('parti')):
-			if len(data.X) != 1:
-				f1.add_shape(type='path', path=confidence_ellipse(data.X, data.y), line_color='rgb(255,255,255,1)', fillcolor=color_dict[i], opacity=.4,)
-	#if dine_aktiv:
-	#f1.add_scatter(x=[dine_coords[0]], y=[dine_coords[1]], mode='markers', marker_symbol='star', marker_size=15)
+		for ii, (i, pari_data) in enumerate(q.groupby('parti')):
+			if len(pari_data.X) != 1:
+				f1.add_shape(type='path', path=confidence_ellipse(pari_data.X, pari_data.y),
+							 line_color='rgb(255,255,255,1)', fillcolor=color_dict[i], opacity=.4, )
+	if data['dine_aktiv']:
+		# f1.add_scatter(x=[data['dine_coords'][0]], y=[data['dine_coords'][1]], mode='markers', marker_symbol='star', marker_size=15)
+		f1.add_vline(data['dine_coords'][0], line_dash="dash", line_color="pink")
+		f1.add_hline(data['dine_coords'][1], line_dash="dash", line_color="pink")
 
 	return f1
 
 
-#dine_coords = [0, 0]  # tracker bruger svar til tegning i viz
-#dine_aktiv = False  # tracker om vi tracker bruger svar eller har trykker på en politiker
-
-
-#@app.callback([*[Output(x, 'value') for x in dk_spg], Output('svar_res', 'children')], {'clickData': Input('viz', 'clickData'), 'spg_in': [Input(x, 'value') for x in dk_spg]})
+@app.callback([*[Output(x, 'value') for x in dk_spg], Output('svar_res', 'children'), Output('bruger_coord', 'data')],
+			  {'clickData': Input('viz', 'clickData'), 'spg_in': [Input(x, 'value') for x in dk_spg]})
 def display_click_data(clickData, spg_in):
-	#global dine_coords, dine_aktiv
 	ctx = callback_context
 	trigger_id = ctx.triggered[0]["prop_id"].split(".")[0]
 	if trigger_id == 'viz':
@@ -162,14 +161,18 @@ def display_click_data(clickData, spg_in):
 		row = q[q['index'] == idx]
 		parti = row['parti'].iloc[0]
 		nyt_parti = lda.predict(row[dk_spg])[0]
-		return [*[row[x].iloc[0] for x in dk_spg], f"Du har klikket på {navn}, {parti}. Vedkomne burde overveje {nyt_parti}"]
+		return [*[row[x].iloc[0] for x in dk_spg],
+				f"Du har klikket på {navn}, {parti}. Vedkomne burde overveje {nyt_parti}",
+				{'dine_aktiv': dine_aktiv, 'dine_coords': [0, 0]}]
 	else:
 		dine_aktiv = True
 		a = pd.DataFrame(spg_in, index=dk_spg).T
 		dine_coords = lda.transform(a)[0]
-		return [*[x for x in spg_in], f"Dine koordinater er {dine_coords[0]:.1f}, {dine_coords[1]:.1f}. Du burde overveje {lda.predict(a)[0]}"]
+		return [*[x for x in spg_in],
+				f"Dine koordinater er {dine_coords[0]:.1f}, {dine_coords[1]:.1f}. Du burde overveje {lda.predict(a)[0]}",
+				{'dine_aktiv': dine_aktiv, 'dine_coords': dine_coords}]
 
 
 if __name__ == "__main__":
-	app.run_server()
-	#app.run_server(debug=True)
+	app.run_server(port=9000)
+# app.run_server(debug=True)
