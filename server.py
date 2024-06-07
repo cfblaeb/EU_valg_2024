@@ -12,8 +12,7 @@ df = pd.read_feather("2024_EP_Lasse_data.feather").reset_index()
 color_dict = pd.read_json("various.json").set_index('bogstav_leg')['farver'].to_dict()
 # color_dict['Frie Grønne'] = color_dict['Frie Grønne, Danmarks Nye Venstrefløjsparti']
 tv2_sprg = pd.read_json('tv2_sprg.json')
-dr_sprgs = pd.DataFrame()  # pd.read_json('questions.json')
-dr_sprgs['test'] = []
+dr_sprgs = pd.read_json('dr1_sprg.json')
 
 dk_spg = ['608', '609', '612', '613', '614', '615', '616', '617', '618', '620',
 		  '621', '622', '623', '626', '627', '629', '630', '631', '634', '636',
